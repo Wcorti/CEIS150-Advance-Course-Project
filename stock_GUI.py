@@ -1,5 +1,5 @@
 # Summary: This module contains the user interface and logic for a graphical user interface version of the stock manager program.
-# Author: 
+# Author: Wesley Corti
 # Date: 
 
 from datetime import datetime

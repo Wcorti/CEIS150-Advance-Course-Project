@@ -1,9 +1,9 @@
 # Summary: This module contains helper functions used by the stock manager program.
-# Author: 
+# Author: Wesley Corti
 # Date: 
 
+from cmath import log
 import matplotlib.pyplot as plt
-
 from os import system, name
 
 # Function to Clear the Screen
@@ -24,7 +24,19 @@ def sortDailyData(stock_list):
         stock.DataList.sort(key=lambda s: s.date)
 
 # Function to create stock chart
-def display_stock_chart(stock_list,symbol):
-    clear_screen()
-    print("*** This Module Under Construction ***")
-    _ = input("*** Press Enter to Continue ***")
+def display_stock_chart(stock_list, symbol):
+    date = []
+    price = []
+    company = ""
+    for  stock in stock_list:
+        if stock.symbol == symbol:
+            company = stock.name
+            for dailyData in stock.DataList:
+                date.append(dailyData.date)
+                price.append(dailyData.close)
+    plt.plot(date, price)
+    plt.xlabel('Date')
+    plt.ylabel('Price')
+    plt.title(company)
+    plt.yscale('log')
+    plt.show()

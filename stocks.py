@@ -1,5 +1,5 @@
 # Summary: This module is just a shorter name for the program that can start either the Console or GUI version of the program.
-# Author: 
+# Author: Wesley Corti
 # Date: 
 
 import stock_console
