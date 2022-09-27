@@ -8,7 +8,6 @@ from utilities import clear_screen, display_stock_chart
 from os import path
 import stock_data
 
-
 # Main Menu
 def main_menu(stock_list):
     option = ""
