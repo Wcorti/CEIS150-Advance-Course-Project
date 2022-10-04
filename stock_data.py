@@ -64,7 +64,6 @@ def save_stock_data(stock_list):
                 cur.execute("COMMIT;")
             except:
                 pass
-    _ = input("*** Press Enter to Continue ***")
     
 # Load stocks and daily data from database
 def load_stock_data(stock_list):
@@ -91,7 +90,6 @@ def load_stock_data(stock_list):
             new_stock.add_data(daily_data)
         stock_list.append(new_stock)
     sortDailyData(stock_list)
-    _ = input("*** Press Enter to Continue ***")
 
 # Get stock price history from web using Web Scraping
 def retrieve_stock_web(dateStart,dateEnd,stock_list):

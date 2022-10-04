@@ -276,10 +276,10 @@ def display_report(stock_data):
         print("Report for: ", stock.symbol, stock.name)
         print("Shares: ", stock.shares)
         count = 0
-        price_total = 0
+        price_total = 0.00
         volume_total = 0
         lowPrice = 999999.99
-        highPrice = 0
+        highPrice = 0.00
         lowVolume = 999999999999
         highVolume = 0
         startDate = datetime.strptime("12/31/2099","%m/%d/%Y")
@@ -306,16 +306,16 @@ def display_report(stock_data):
             print(daily_data.date.strftime("%m/%d/%y"),daily_data.close,daily_data.volume)
         if count > 0:
             print("Summary ---" + startDate.strftime("%m/%d/%y ") + "to " + endDate.strftime("%m/%d/%y"))
-            print("Low Price:", "${:,.2f}".format(lowPrice))
-            print("High Price:", "${:,.2f}".format(highPrice))
-            print("Average Price:", "${:,.2f}".format(price_total / count))
-            print("Low Volume:", lowVolume)
-            print("High Volume:",  highVolume)
-            print("Average Volume:", volume_total / count)
-            print("Starting Price:", "${:,.2f}".format(startPrice))
-            print("Ending Price:", "${:,.2f}".format(endPrice))
-            print("Change in Price:", "${:,.2f}".format(priceChange))
-            print("Profit/Loss:", "${:,.2f}".format(priceChange * stock.shares))
+            print("Low Price: " + "${:,.2f}".format(lowPrice))
+            print("High Price: " + "${:,.2f}".format(highPrice))
+            print("Average Price: " + "${:,.2f}".format(price_total / count))
+            print("Low Volume: " + str(lowVolume))
+            print("High Volume: " +  str(highVolume))
+            print("Average Volume: " + str(volume_total / count))
+            print("Starting Price: " + "${:,.2f}".format(startPrice))
+            print("Ending Price: " + "${:,.2f}".format(endPrice))
+            print("Change in Price: " + "${:,.2f}".format(priceChange))
+            print("Profit/Loss: " + "${:,.2f}".format(priceChange * stock.shares))
         else:
             print("No daily history")
             print("=========================================")
