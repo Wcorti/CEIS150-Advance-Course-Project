@@ -94,14 +94,49 @@ def load_stock_data(stock_list):
 # Get stock price history from web using Web Scraping
 def retrieve_stock_web(dateStart,dateEnd,stock_list):
     clear_screen()
-    print("*** This Module Under Construction ***")
-    _ = input("*** Press Enter to Continue ***")
+    dateFrom = str(int(time.mktime(time.strptime(dateStart,"%m/%d/%y"))))
+    dateTo = str(int(time.mktime(time.strptime(dateEnd,"%m/%d/%y"))))
+    recordCount = 0
+    for stock in stock_list:
+        stockSymbol = stock.symbol
+        url = "https://finance.yahoo.com/quote/"+stockSymbol+"/history?period1="+dateFrom+"&period2="+dateTo+"&interval=1d&filter=history&frequency=1d"
+        # Note this code assumes the use of the Chrome browser.
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches',['enable-logging'])
+        options.add_experimental_option("prefs",{'profile.managed_default_content_settings.javascript': 2})
+        try:
+            driver = webdriver.Chrome(options=options)
+            driver.implicitly_wait(60)
+            driver.get(url)
+        except:
+            raise RuntimeWarning("Chrome Driver Not Found")
+
+        soup = BeautifulSoup(driver.page_source,"html.parser")
+        row = soup.find('table',class_="W(100%) M(0)")
+        dataRows = soup.find_all('tr')
+        for row in dataRows:
+            td = row.find_all('td')
+            rowList = [i.text for i in td]
+            columnCount = len(rowList)
+            if columnCount == 7: # This row is a standard data row (otherwise it's a special case such as dividend which will be ignored)
+                daily_data = DailyData(datetime.strptime(rowList[0],"%b %d, %Y"),float(rowList[5].replace(',','')),float(rowList[6].replace(',','')))
+                stock.add_data(daily_data)
+                recordCount += 1
+    return recordCount
+
 
 # Get price and volume history from Yahoo! Finance using CSV import.
 def import_stock_web_csv(stock_list,symbol,filename):
     clear_screen()
-    print("*** This Module Under Construction ***")
-    _ = input("*** Press Enter to Continue ***")
+    for stock in stock_list:
+        if stock.symbol == symbol:
+            with open(filename, newline='') as stockdata:
+                datareader = csv.reader(stockdata,delimiter=',')
+                next(datareader)
+                for row in datareader:
+                    daily_data = DailyData(datetime.strptime(row[0],"%Y-%m-%d"),float(row[4]),float(row[6]))
+                    stock.add_data(daily_data)
+
 
 def main():
     clear_screen()

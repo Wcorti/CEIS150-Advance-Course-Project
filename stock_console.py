@@ -3,6 +3,7 @@
 # Date: 9/13/2022
 
 from datetime import date, datetime
+from distutils.log import error
 from stock_class import Stock, DailyData
 from utilities import clear_screen, display_stock_chart
 from os import path
@@ -386,13 +387,38 @@ def manage_data(stock_list):
 # Get stock price and volume history from Yahoo! Finance using Web Scraping
 def retrieve_from_web(stock_list):
     clear_screen()
-    print("*** This Module Under Construction ***")
+    print("Retrieving Data from Yahoo! Finance ---")
+    print("This will retrieve data from all stock in your stock list.")
+    dateFrom = input("Enter Starting Date (mm/dd/yy): ")
+    dateTo = input("Enter Ending Date (mm/dd/yy): ")
+    try:
+        stock_data.retrieve_stock_web(dateFrom,dateTo,stock_list)
+    except ValueError:
+        print("Date in invalid format")
+        return
+
+    print("Records Retrieved")
     _ = input("*** Press Enter to Continue ***")
+
 
 # Import stock price and volume history from Yahoo! Finance using CSV Import
 def import_csv(stock_list):
     clear_screen()
-    print("*** This Module Under Construction ***")
+    print("\nAdd historical data to a stock: ")
+    print("Stock List: [",end="")
+    for stock in stock_list:
+        print(stock.symbol," ",end="")
+    print("]")
+    symbol = input("Which stock data do you want to import?: ").upper()
+    filename = input("Enter file name: ")
+    for stock in stock_list:
+        if stock.symbol == symbol:
+            try:
+                stock_data.import_stock_web_csv(stock_list,symbol,filename)
+            except FileNotFoundError:
+                print("File not Found")
+
+    display_report(stock_list)
     _ = input("*** Press Enter to Continue ***")
 
 # Begin program

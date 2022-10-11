@@ -1,6 +1,6 @@
 # Summary: This module contains the user interface and logic for a graphical user interface version of the stock manager program.
 # Author: Wesley Corti
-# Date: 
+# Date: 10/10/2022
 
 from datetime import datetime
 from os import path
@@ -24,7 +24,7 @@ class StockApp:
 
         # Create Window
         self.root = Tk()
-        self.root.title("(myname) Stock Manager") #Replace with a suitable name for your program
+        self.root.title("Stock Manager") 
 
 
         # Add Menubar
@@ -267,7 +267,7 @@ class StockApp:
 
     # Import CSV stock history file.
     def importCSV_web_data(self):
-        symbol + self.stockList.get(self.stockList.curselection())
+        symbol = self.stockList.get(self.stockList.curselection())
         filename = filedialog.askopenfilename(title="Select " + symbol + " File to Import",filetypes=[('Yahoo Finance! CSV','*.csv')])
         if filename !="":
             stock_data.import_stock_web_csv(self.stock_list,symbol,filename)
